@@ -6,7 +6,7 @@
 #    By: stiffiny <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/06 14:36:27 by stiffiny          #+#    #+#              #
-#    Updated: 2021/06/27 12:56:01 by stiffiny         ###   ########.fr        #
+#    Updated: 2021/06/27 13:05:39 by stiffiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,10 @@ test	:	$(OBJS) $(OBJS_TEST) make-libft
 
 bonus	:
 
-clean	:
+clean-libft:
+	$(MAKE) fclean -C libft/
+
+clean	:	clean-libft
 			$(RM) $(OBJS) $(OBJS_TEST) $(D_FILES)
 
 fclean	:	clean
