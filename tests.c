@@ -21,10 +21,14 @@ int	run_test(char *str, ...)
 
 int	main(void)
 {
+	/*
 	int i;
 
 	i = 15;
+	
+		
 	printf("Test basic conversions\n");
+	
 	if (printf("String:	|%s|\n", "Hello") != ft_printf("String:	|%s|\n", "Hello"))
 		printf("RETURN DIFF\n");
 	if (printf("Int d:	|%d|\n", i) != ft_printf("Int:	|%d|\n", i))
@@ -43,5 +47,23 @@ int	main(void)
 		printf("RETURN DIFF\n");
 	if (printf("ESCAPE:	|%%|\n") != ft_printf("ESCAPE:	|%%|\n"))
 		printf("RETURN DIFF\n");
+	*/
+	printf("Test flags INTEGER\n");
+	printf("-	|%-d|\n", 123);
+	printf("-5	|%-5d|\n", 123);
+	printf("05d	|%05d|\n", 123);
+	printf("*d	|%*d|\n", 5, 123);
+	printf("5	|%5d|\n", 123);
+	printf("5.2	|%5.2d|\n", 123);
+	printf("*.*	|%*.*d|\n", 5, 2, 123);
+	
+	printf("Test flags STRING\n");
+	printf("-	|%-s|\n", "yo");
+	printf("-5	|%-5s|\n", "yo");
+	printf("*d	|%*s|\n", 5, "yo");
+	printf("5	|%5s|\n", "yo");
+	printf("5.2	|%5.2s|\n", "yo");
+	printf("*.*	|%*.*s|\n", 5, 2, "yo");
+
 	return (0);
 }
