@@ -19,17 +19,22 @@ int	print_s(char *str, t_flags flags)
 {
 	int	len;
 	int	padding_len;
+	char	padding_char;
 
+	padding_char = ' ';
+	if (flags.zero_padded)
+		padding_char = '0';
 	len = ft_strlen(str);
 	if (flags.field_width > len)
 		padding_len = flags.field_width - len;
 	else
 		padding_len = 0;
+
 	if (!flags.left_adj && padding_len > 0)
-		ft_print_padding(' ', padding_len);
+		ft_print_padding(padding_char, padding_len);
 	ft_putstr_fd(str, 1);
 	if (flags.left_adj && padding_len > 0)
-		ft_print_padding(' ', padding_len);
+		ft_print_padding(padding_char, padding_len);
 	return (ft_strlen(str) + padding_len);
 }
 /*
@@ -66,6 +71,12 @@ int	insert_arg(const char *str, int *i, va_list *pargs)
 		if (str[*i] == '-')
 		{
 			flags.left_adj = 1;
+			(*i)++;
+			flags.field_width = get_flag_value(str, i, pargs);		
+		}
+		else if (str[*i] == '0')
+		{
+			flags.zero_padded = 1;
 			(*i)++;
 			flags.field_width = get_flag_value(str, i, pargs);		
 		}
