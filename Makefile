@@ -6,7 +6,7 @@
 #    By: stiffiny <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/06 14:36:27 by stiffiny          #+#    #+#              #
-#    Updated: 2021/06/27 13:05:39 by stiffiny         ###   ########.fr        #
+#    Updated: 2021/06/27 16:00:22 by stiffiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,11 +38,11 @@ $(NAME)	:	$(OBJS) make-libft
 
 include	$(wildcard $(D_FILES))
 
-make-libft:
+make-libft	:
 	$(MAKE) -C libft/
 
-test	:	$(OBJS) $(OBJS_TEST) make-libft
-	gcc -Wall -Wextra -Werror $(OBJS) $(OBJS_TEST) -L ./libft -lft -o test
+test	:	make-libft
+	gcc -Wall -Wextra -Werror *.c -L ./libft -lft -g -o test
 
 bonus	:
 

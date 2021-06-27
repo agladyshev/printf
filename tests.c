@@ -25,23 +25,23 @@ int	main(void)
 
 	i = 15;
 	printf("Test basic conversions\n");
-	if (printf("String:		|%s|\n", "Hello") != ft_printf("String ft:	|%s|\n", "Hello"))
+	if (printf("String:	|%s|\n", "Hello") != ft_printf("String:	|%s|\n", "Hello"))
 		printf("RETURN DIFF\n");
-	if (printf("Int d:		|%d|\n", i) != ft_printf("Int ft:		|%d|\n", i))
+	if (printf("Int d:	|%d|\n", i) != ft_printf("Int:	|%d|\n", i))
 		printf("RETURN DIFF\n");
-	if (printf("Int i:		|%i|\n", i) != ft_printf("Int i ft:	|%i|\n", i))
+	if (printf("Int i:	|%i|\n", i) != ft_printf("Int i:	|%i|\n", i))
 		printf("RETURN DIFF\n");
-	if (printf("Char:		|%c|\n", 'A') != ft_printf("Char ft:	|%c|\n", 'A'))
+	if (printf("Char:	|%c|\n", 'A') != ft_printf("Char:	|%c|\n", 'A'))
 		printf("RETURN DIFF\n");
-	if (printf("Address:	|%p|\n", &i) != ft_printf("Address ft:	|%p|\n", &i))
+	if (printf("Address:	|%p|\n", &i) != ft_printf("Address:	|%p|\n", &i))
 		printf("RETURN DIFF\n");
-	if (printf("Unsigned:	|%u|\n", (unsigned int)i) != ft_printf("Unsigned ft:	|%p|\n", (unsigned int)i))
+	if (printf("Unsigned:	|%u|\n", (unsigned int)i) != ft_printf("Unsigned:	|%p|\n", (unsigned int)i))
 		printf("RETURN DIFF\n");
-	if (printf("hex:		|%x|\n", (unsigned int)i) != ft_printf("hex ft:		|%x|\n", (unsigned int)i))
+	if (printf("hex:	|%x|\n", (unsigned int)i) != ft_printf("hex:	|%x|\n", (unsigned int)i))
 		printf("RETURN DIFF\n");
-	if (printf("HEX:		|%X|\n", (unsigned int)i) != ft_printf("HEX FT:		|%X|\n", (unsigned int)i))
+	if (printf("HEX:	|%X|\n", (unsigned int)i) != ft_printf("HEX:	|%X|\n", (unsigned int)i))
 		printf("RETURN DIFF\n");
-	if (printf("ESCAPE:		|%%|\n") != ft_printf("ESCAPE FT:	|%%|\n"))
+	if (printf("ESCAPE:	|%%|\n") != ft_printf("ESCAPE:	|%%|\n"))
 		printf("RETURN DIFF\n");
 	return (0);
 }
