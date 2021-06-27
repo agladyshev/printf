@@ -9,6 +9,7 @@ typedef struct s_flags {
 	int	zero_padded;
 	int	precision;
 	int	field_width;
+	int	numerical;
 }	t_flags;
 
 int	ft_printf(const char *str, ...);

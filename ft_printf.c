@@ -15,21 +15,20 @@ void	ft_print_padding(char c, int len)
 	}
 }
 
-int	print_s(char *str, t_flags flags)
+int	ft_putarg(char *str, t_flags flags)
 {
 	int	len;
 	int	padding_len;
 	char	padding_char;
 
 	padding_char = ' ';
-	if (flags.zero_padded)
+	if (flags.zero_padded && flags.numerical)
 		padding_char = '0';
 	len = ft_strlen(str);
 	if (flags.field_width > len)
 		padding_len = flags.field_width - len;
 	else
 		padding_len = 0;
-
 	if (!flags.left_adj && padding_len > 0)
 		ft_print_padding(padding_char, padding_len);
 	ft_putstr_fd(str, 1);
@@ -37,14 +36,7 @@ int	print_s(char *str, t_flags flags)
 		ft_print_padding(padding_char, padding_len);
 	return (ft_strlen(str) + padding_len);
 }
-/*
-int	print_i_d(int nbr)
-{
-	ft_putnbr_fd(nbr, 1);
-	//TODO return length
-	return (0);
-}
-*/
+
 int	get_flag_value(const char *str, int *i, va_list *pargs)
 {
 	int num;
@@ -52,6 +44,7 @@ int	get_flag_value(const char *str, int *i, va_list *pargs)
 	// TODO error handling
 	num = 0;
 	num = ft_atoi(str + *i);
+	//printf("?%d?", num);
 	if (num)
 		return (num);
 	else if (str[*i] == '*')
@@ -59,35 +52,45 @@ int	get_flag_value(const char *str, int *i, va_list *pargs)
 	return (num);
 }
 
+int	read_flags(const char *str, int *i, t_flags *flags, va_list *pargs)
+{
+	(*i)++;
+	while (!ft_strchr("cspdiuxX%", (int)str[*i]))
+	{
+		if (str[*i] == '-')
+			flags->left_adj = 1;
+		else if (str[*i] == '0')
+			flags->zero_padded = 1;
+		if (ft_strchr("-0", (int)str[*i]))
+			(*i)++;
+		else if (!flags->field_width)
+			flags->field_width = get_flag_value(str, i, pargs);
+		else if (str[*i] == '.')
+		{
+			(*i)++;
+			flags->precision = get_flag_value(str, i, pargs);
+		}
+		else
+			(*i)++;
+
+	}
+	// TODO error handling
+	return (0);
+}
+
 int	insert_arg(const char *str, int *i, va_list *pargs)
 {
 	t_flags	flags;
 
-	flags = (t_flags) {0, 0, 0, 0};
-	(*i)++;
-
-	while (!ft_strchr("cspdiuxX%", (int)str[*i]))
-	{
-		if (str[*i] == '-')
-		{
-			flags.left_adj = 1;
-			(*i)++;
-			flags.field_width = get_flag_value(str, i, pargs);		
-		}
-		else if (str[*i] == '0')
-		{
-			flags.zero_padded = 1;
-			(*i)++;
-			flags.field_width = get_flag_value(str, i, pargs);		
-		}
-		else
-			(*i)++;
-	}
+	flags = (t_flags) {0, 0, 0, 0, 0};
+	read_flags(str, i, &flags, pargs);
 	//printf("~%d %d %d %d~", flags.left_adj, flags.zero_padded, flags.field_width, flags.precision);
+	if (ft_strchr("diuxX", (int)str[*i]))
+		flags.numerical = 1;
 	if (str[*i] == 's')
-		return (print_s(va_arg(*pargs, char *), flags));
+		return (ft_putarg(va_arg(*pargs, char *), flags));
 	if (str[*i] == 'd' || str[*i] == 'i')
-		return (print_s(ft_itoa(va_arg(*pargs, int)), flags));
+		return (ft_putarg(ft_itoa(va_arg(*pargs, int)), flags));
 	return (-1);
 	//TODO error handling
 }

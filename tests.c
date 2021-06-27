@@ -64,8 +64,6 @@ int	main(void)
 	if (res != ft_res)
 		printf("sys: %d, ft: %d\n", res, ft_res);
 
-	
-	/*
 	printf("-5d	|%-5d|\n", 123);
 	ft_printf("-5d	|%-5d|\n", 123);
 	printf("*d	|%*d|\n", 5, 123);
@@ -76,12 +74,16 @@ int	main(void)
 	ft_printf("5.2	|%5.2d|\n", 123);
 	printf("*.*	|%*.*d|\n", 5, 2, 123);
 	ft_printf("*.*	|%*.*d|\n", 5, 2, 123);
+	
+	/*
 	printf("Test flags STRING\n");
 	ft_printf("Test flags STRING\n");
 	printf("-	|%-s|\n", "yo");
 	ft_printf("-	|%-s|\n", "yo");
 	printf("-5	|%-5s|\n", "yo");
 	ft_printf("-5	|%-5s|\n", "yo");
+	printf("05s	|%05s|\n", "yo");	
+	ft_printf("05s	|%05s|\n", "yo");	
 	printf("*d	|%*s|\n", 5, "yo");
 	ft_printf("*d	|%*s|\n", 5, "yo");
 	printf("5	|%5s|\n", "yo");

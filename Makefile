@@ -6,7 +6,7 @@
 #    By: stiffiny <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/06 14:36:27 by stiffiny          #+#    #+#              #
-#    Updated: 2021/06/27 16:00:22 by stiffiny         ###   ########.fr        #
+#    Updated: 2021/06/27 20:35:04 by stiffiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ make-libft	:
 	$(MAKE) -C libft/
 
 test	:	make-libft
-	gcc -Wall -Wextra -Werror *.c -L ./libft -lft -g -o test
+	gcc *.c -L ./libft -lft -g -o test
 
 bonus	:
 
