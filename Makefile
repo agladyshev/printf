@@ -6,7 +6,7 @@
 #    By: stiffiny <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/06 14:36:27 by stiffiny          #+#    #+#              #
-#    Updated: 2021/06/28 12:45:29 by stiffiny         ###   ########.fr        #
+#    Updated: 2021/06/28 17:34:22 by stiffiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ LIBFT_DIR	=	./libft/
 OBJS		= $(patsubst %.c,%.o,$(LIST))
 
 OBJS_LIBFT	=	ft_putchar_fd.o ft_strlen.o ft_putstr_fd.o\
-			ft_atoi.o ft_itoa.o ft_strchr.o
+			ft_atoi.o ft_itoa.o ft_strchr.o \
+			ft_strjoin.o ft_strdup.o ft_memset.o
 
 OBJS_TEST	= $(patsubst %.c,%.o,$(LIST_TEST))
 
