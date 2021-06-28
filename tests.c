@@ -21,6 +21,9 @@ int	run_test(char *str, ...)
 
 int	main(void)
 {
+	int res;
+	int ft_res;
+
 	/*
 	int i;
 
@@ -45,20 +48,17 @@ int	main(void)
 	if (printf("ESCAPE:	|%%|\n") != ft_printf("ESCAPE:	|%%|\n"))
 		printf("RETURN DIFF\n");
 	*/
-
 	printf("Test flags INTEGER\n");
-	
-	int res;
-	int ft_res;
-
 	res = printf("-	|%-d|\n", 123);
 	ft_res = ft_printf("-	|%-d|\n", 123);
 	if (res != ft_res)
 		printf("sys: %d, ft: %d\n", res, ft_res);
+	
 	res = printf("-5	|%-5d|\n", 123);
 	ft_res = ft_printf("-5	|%-5d|\n", 123);
 	if (res != ft_res)
 		printf("sys: %d, ft: %d\n", res, ft_res);
+	
 	res = printf("05d	|%05d|\n", 123);
 	ft_res = ft_printf("05d	|%05d|\n", 123);
 	if (res != ft_res)
@@ -74,14 +74,13 @@ int	main(void)
 	ft_printf("5.2	|%5.2d|\n", 123);
 	printf("*.*	|%*.*d|\n", 5, 2, 123);
 	ft_printf("*.*	|%*.*d|\n", 5, 2, 123);
-	
-	/*
 	printf("Test flags STRING\n");
 	ft_printf("Test flags STRING\n");
 	printf("-	|%-s|\n", "yo");
 	ft_printf("-	|%-s|\n", "yo");
 	printf("-5	|%-5s|\n", "yo");
 	ft_printf("-5	|%-5s|\n", "yo");
+	
 	printf("05s	|%05s|\n", "yo");	
 	ft_printf("05s	|%05s|\n", "yo");	
 	printf("*d	|%*s|\n", 5, "yo");
@@ -90,8 +89,59 @@ int	main(void)
 	ft_printf("5	|%5s|\n", "yo");
 	printf("5.2	|%5.2s|\n", "yo");
 	ft_printf("5.2	|%5.2s|\n", "yo");
+	
 	printf("*.*	|%*.*s|\n", 5, 2, "yo");
 	ft_printf("*.*	|%*.*s|\n", 5, 2, "yo");
-	*/
+	printf("Test flags %%\n");
+	ft_printf("Test flags %%\n");
+	printf("-	|%-%|\n", "yo");
+	ft_printf("-	|%-%|\n", "yo");
+	printf("-5	|%-5%|\n", "yo");
+	ft_printf("-5	|%-5%|\n", "yo");
+	
+	printf("05s	|%05%|\n", "yo");	
+	ft_printf("05s	|%05%|\n", "yo");	
+	printf("*d	|%*%|\n", 5, "yo");
+	ft_printf("*d	|%*%|\n", 5, "yo");
+	printf("5	|%5%|\n", "yo");
+	ft_printf("5	|%5%|\n", "yo");
+	printf("5.2	|%5.2%|\n", "yo");
+	ft_printf("5.2	|%5.2%|\n", "yo");
+	
+	printf("*.*	|%*.*%|\n", 5, 2, "yo");
+	ft_printf("*.*	|%*.*%|\n", 5, 2, "yo");
+	printf("Test flags char\n");
+	ft_printf("Test flags char\n");
+	printf("-	|%-c|\n", 'c');
+	ft_printf("-	|%-c|\n", 'c');
+	printf("-5	|%-5c|\n", 'c');
+	ft_printf("-5	|%-5c|\n", 'c');
+	
+	printf("05s	|%05c|\n", 'c');	
+	ft_printf("05s	|%05c|\n", 'c');	
+	printf("*d	|%*c|\n", 5, 'c');
+	ft_printf("*d	|%*c|\n", 5, 'c');
+	printf("5	|%5c|\n", 'c');
+	ft_printf("5	|%5c|\n", 'c');
+	printf("5.2	|%5.2c|\n", 'c');
+	ft_printf("5.2	|%5.2c|\n", 'c');
+	
+	printf("*.*	|%*.*c|\n", 5, 2, 'c');
+	ft_printf("*.*	|%*.*c|\n", 5, 2, 'c');
+	res = printf("|%.7s|\n", "hello");
+	ft_res = ft_printf("|%.7s|\n", "hello");
+	printf("%d %d\n", res, ft_res);
+	
+	res = printf("|%.3s|\n", "hello");
+	ft_res = ft_printf("|%.3s|\n", "hello");
+	printf("%d %d\n", res, ft_res);
+
+	res = printf("|%.s|\n", "hello");
+	ft_res = ft_printf("|%.s|\n", "hello");
+	printf("%d %d\n", res, ft_res);
+	
+	res = printf("|%.0s|\n", "hello");
+	ft_res = ft_printf("|%.0s|\n", "hello");
+	printf("%d %d\n", res, ft_res);
 	return (0);
 }
