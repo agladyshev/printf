@@ -52,7 +52,7 @@ int	apply_padding(char **str, t_flags flags)
 	return (0);
 }
 
-size_t	ft_putarg(char *str, t_flags flags)
+size_t	print_str_formatted(char *str, t_flags flags)
 {
 	size_t	len;
 	char	*str_copy;
@@ -114,30 +114,73 @@ int	read_flags(const char *str, int *i, t_flags *flags, va_list *pargs)
 	return (0);
 }
 
-size_t	insert_arg(const char *str, int *i, va_list *pargs)
+int	print_int(va_list *pargs, t_flags flags)
+{
+	int		arg;
+	int		res;
+	char	*str;
+
+	arg = va_arg(*pargs, int);
+	str = ft_itoa(arg);
+	if (!str)
+		return (-1);
+	res = print_str_formatted(str, flags);
+	free(str);
+	return (res);
+}
+
+int	print_char(va_list *pargs, t_flags flags)
+{
+	int		arg;
+	int		res;
+	char	str[2];
+	
+	str[0] = va_arg(*pargs, int);
+	str[1] = 0;
+	res = print_str_formatted(str, flags);
+	return (res);
+}
+
+int	print_hex(va_list *pargs, t_flags flags)
+{
+	return (0);
+}
+
+int	print_unsigned(va_list *pargs, t_flags flags)
+{
+	int		arg;
+	int		res;
+	char	*str;
+
+	arg = va_arg(*pargs, int);
+	str = ft_utoa(arg);
+	if (!str)
+		return (-1);
+	res = print_str_formatted(str, flags);
+	free(str);
+	return (res);
+}
+
+size_t	print_arg(const char *str, int *i, va_list *pargs)
 {
 	t_flags	flags;
-	char	chr[2];
 
 	flags = (t_flags){0, 0, -1, -1, 0};
 	read_flags(str, i, &flags, pargs);
 	if (ft_strchr("diuxX", (int)str[*i]))
 		flags.numerical = 1;
 	if (str[*i] == 's')
-		return (ft_putarg(va_arg(*pargs, char *), flags));
+		return (print_str_formatted(va_arg(*pargs, char *), flags));
 	else if (str[*i] == '%')
-	{
-		flags = (t_flags){0, 0, -1, -1, 0};
-		return (ft_putarg("%", flags));
-	}
+		return (print_str_formatted("%", ((t_flags){0, 0, -1, -1, 0})));
 	else if (str[*i] == 'c')
-	{
-		chr[0] = va_arg(*pargs, int);
-		chr[1] = 0;
-		return (ft_putarg(chr, flags));
-	}
+		return (print_char(pargs, flags));
 	else if (str[*i] == 'd' || str[*i] == 'i')
-		return (ft_putarg(ft_itoa(va_arg(*pargs, int)), flags));
+		return (print_int(pargs, flags));
+	else if (str[*i] == 'x' || str[*i] == 'X' || str[*i] == 'p')
+		return (print_hex(pargs, flags));
+	else if (str[*i] == 'u')
+		return (print_unsigned(pargs, flags));
 	return (-1);
 	//TODO error handling
 }
@@ -146,22 +189,22 @@ int	ft_printf(const char *str, ...)
 {
 	va_list	pargs;
 	int		i;
-	size_t	ins_cnt;
+	size_t	printed_chars;
 
 	i = 0;
-	ins_cnt = 0;
+	printed_chars = 0;
 	va_start(pargs, str);
 	while (str[i])
 	{
 		if (str[i] == '%')
-			ins_cnt += insert_arg(str, &i, &pargs);
+			printed_chars += print_arg(str, &i, &pargs);
 		else
 		{
 			write(1, str + i, 1);
-			ins_cnt++;
+			printed_chars++;
 		}
 		i++;
 	}
 	va_end(pargs);
-	return (ins_cnt);
+	return (printed_chars);
 }

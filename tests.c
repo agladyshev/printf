@@ -23,7 +23,6 @@ int	main(void)
 {
 	int res;
 	int ft_res;
-	/*
 	int i;
 
 	i = 15;
@@ -38,7 +37,7 @@ int	main(void)
 		printf("RETURN DIFF\n");
 	if (printf("Address:	|%p|\n", &i) != ft_printf("Address:	|%p|\n", &i))
 		printf("RETURN DIFF\n");
-	if (printf("Unsigned:	|%u|\n", (unsigned int)i) != ft_printf("Unsigned:	|%p|\n", (unsigned int)i))
+	if (printf("Unsigned:	|%u|\n", (unsigned int)i) != ft_printf("Unsigned:	|%u|\n", (unsigned int)i))
 		printf("RETURN DIFF\n");
 	if (printf("hex:	|%x|\n", (unsigned int)i) != ft_printf("hex:	|%x|\n", (unsigned int)i))
 		printf("RETURN DIFF\n");
@@ -46,8 +45,6 @@ int	main(void)
 		printf("RETURN DIFF\n");
 	if (printf("ESCAPE:	|%%|\n") != ft_printf("ESCAPE:	|%%|\n"))
 		printf("RETURN DIFF\n");
-	
-	*/	
 	printf("Test flags INTEGER\n");
 	res = printf("-	|%-d|\n", 123);
 	ft_res = ft_printf("-	|%-d|\n", 123);
