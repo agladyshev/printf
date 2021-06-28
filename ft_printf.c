@@ -32,11 +32,10 @@ int	apply_precision(char **str, t_flags flags)
 	len = ft_strlen(*str);
 	if (flags.numerical && (size_t)flags.precision > len)
 		concat_chars_to_str(str, '0', ((size_t)flags.precision - len), 0);
-	if(flags.numerical == 0 && (size_t)flags.precision < len)
+	if (flags.numerical == 0 && (size_t)flags.precision < len)
 		(*str)[flags.precision] = 0;
 	return (0);
 }
-
 
 int	apply_padding(char **str, t_flags flags)
 {
@@ -48,7 +47,8 @@ int	apply_padding(char **str, t_flags flags)
 		padding_char = '0';
 	len = ft_strlen(*str);
 	if ((size_t)flags.field_width > len)
-		concat_chars_to_str(str, padding_char, (size_t)flags.field_width - len, flags.left_adj);
+		concat_chars_to_str(str, padding_char,
+			(size_t)flags.field_width - len, flags.left_adj);
 	return (0);
 }
 
@@ -56,7 +56,7 @@ size_t	ft_putarg(char *str, t_flags flags)
 {
 	size_t	len;
 	char	*str_copy;
-	
+
 	str_copy = ft_strdup(str);
 	if (flags.precision >= 0)
 		apply_precision(&str_copy, flags);
@@ -70,7 +70,7 @@ size_t	ft_putarg(char *str, t_flags flags)
 
 int	get_flag_value(const char *str, int *i, va_list *pargs, int def_value)
 {
-	int num;
+	int	num;
 
 	// TODO error handling
 	num = def_value;
@@ -119,7 +119,7 @@ size_t	insert_arg(const char *str, int *i, va_list *pargs)
 	t_flags	flags;
 	char	chr[2];
 
-	flags = (t_flags) {0, 0, -1, -1, 0};
+	flags = (t_flags){0, 0, -1, -1, 0};
 	read_flags(str, i, &flags, pargs);
 	if (ft_strchr("diuxX", (int)str[*i]))
 		flags.numerical = 1;
@@ -127,7 +127,7 @@ size_t	insert_arg(const char *str, int *i, va_list *pargs)
 		return (ft_putarg(va_arg(*pargs, char *), flags));
 	else if (str[*i] == '%')
 	{
-		flags = (t_flags) {0, 0, -1, -1, 0};
+		flags = (t_flags){0, 0, -1, -1, 0};
 		return (ft_putarg("%", flags));
 	}
 	else if (str[*i] == 'c')
@@ -146,7 +146,7 @@ int	ft_printf(const char *str, ...)
 {
 	va_list	pargs;
 	int		i;
-	size_t		ins_cnt;
+	size_t	ins_cnt;
 
 	i = 0;
 	ins_cnt = 0;
