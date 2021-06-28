@@ -17,13 +17,12 @@ int	run_test(char *str, ...)
 	else
 		printf("RETURN DIFF\n");
 }
-*/
+*/#include <stddef.h>
 
 int	main(void)
 {
 	int res;
 	int ft_res;
-
 	/*
 	int i;
 
@@ -47,7 +46,8 @@ int	main(void)
 		printf("RETURN DIFF\n");
 	if (printf("ESCAPE:	|%%|\n") != ft_printf("ESCAPE:	|%%|\n"))
 		printf("RETURN DIFF\n");
-	*/
+	
+	*/	
 	printf("Test flags INTEGER\n");
 	res = printf("-	|%-d|\n", 123);
 	ft_res = ft_printf("-	|%-d|\n", 123);
@@ -63,15 +63,18 @@ int	main(void)
 	ft_res = ft_printf("05d	|%05d|\n", 123);
 	if (res != ft_res)
 		printf("sys: %d, ft: %d\n", res, ft_res);
-
+	
+	
 	printf("-5d	|%-5d|\n", 123);
 	ft_printf("-5d	|%-5d|\n", 123);
 	printf("*d	|%*d|\n", 5, 123);
 	ft_printf("*d	|%*d|\n", 5, 123);
 	printf("5	|%5d|\n", 123);
 	ft_printf("5	|%5d|\n", 123);
-	printf("5.2	|%5.2d|\n", 123);
-	ft_printf("5.2	|%5.2d|\n", 123);
+	
+	printf("5.2|%5.2d|\n", 23);
+	ft_printf("5.2|%5.2d|\n", 23);
+	
 	printf("*.*	|%*.*d|\n", 5, 2, 123);
 	ft_printf("*.*	|%*.*d|\n", 5, 2, 123);
 	printf("Test flags STRING\n");
@@ -87,11 +90,11 @@ int	main(void)
 	ft_printf("*d	|%*s|\n", 5, "yo");
 	printf("5	|%5s|\n", "yo");
 	ft_printf("5	|%5s|\n", "yo");
-	printf("5.2	|%5.2s|\n", "yo");
-	ft_printf("5.2	|%5.2s|\n", "yo");
-	
+	printf("5.2|%5.2s|\n", "you");
+	ft_printf("5.2|%5.2s|\n", "you");
 	printf("*.*	|%*.*s|\n", 5, 2, "yo");
 	ft_printf("*.*	|%*.*s|\n", 5, 2, "yo");
+
 	printf("Test flags %%\n");
 	ft_printf("Test flags %%\n");
 	printf("-	|%-%|\n", "yo");
@@ -143,5 +146,17 @@ int	main(void)
 	res = printf("|%.0s|\n", "hello");
 	ft_res = ft_printf("|%.0s|\n", "hello");
 	printf("%d %d\n", res, ft_res);
+	
+	printf("Test precision on int\n");
+	res = printf(".5|%.5d|\n", 123);
+	ft_res = ft_printf(".5|%.5d|\n", 123);
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
+	res = printf("5.5|%5.5d|\n", 123);
+	ft_res = ft_printf("5.5|%5.5d|\n", 123);
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
+	
+
 	return (0);
 }

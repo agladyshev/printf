@@ -1,44 +1,69 @@
 #include "libftprintf.h"
-#include "libft.h"
+#include "libft/libft.h"
 
 #include <stdio.h>
 
-void	ft_print_padding(char c, int len)
+int	concat_chars_to_str(char **str, char c, int len, int left_adj)
 {
-	int	i;
-	
-	i = 0;
-	while (i < len)
-	{
-		ft_putchar_fd(c, 1);
-		i++;
-	}
+	char	*swap;
+	char	*buf;
+
+	swap = *str;
+	buf = malloc(sizeof(char) * (len + 1));
+	if (!buf)
+		return (-1);
+	ft_memset(buf, c, len);
+	buf[len] = 0;
+	if (left_adj)
+		*str = ft_strjoin(swap, buf);
+	else
+		*str = ft_strjoin(buf, swap);
+	free(buf);
+	free(swap);
+	if (!*str)
+		return (-1);
+	return (0);
 }
 
-int	ft_putarg(char *str, t_flags flags)
+int	apply_precision(char **str, t_flags flags)
 {
-	int	len;
-	int	padding_len;
+	size_t	len;
+
+	len = ft_strlen(*str);
+	if (flags.numerical && (size_t)flags.precision > len)
+		concat_chars_to_str(str, '0', ((size_t)flags.precision - len), 0);
+	if(flags.numerical == 0 && (size_t)flags.precision < len)
+		(*str)[flags.precision] = 0;
+	return (0);
+}
+
+
+int	apply_padding(char **str, t_flags flags)
+{
 	char	padding_char;
-	char	*str_copy;
-	
-	str_copy = ft_strdup(str);
-	if (!flags.numerical && flags.precision >= 0 && flags.precision <= (int)ft_strlen(str_copy))
-		str_copy[flags.precision] = 0;
+	size_t	len;
+
 	padding_char = ' ';
 	if (flags.zero_padded && flags.numerical)
 		padding_char = '0';
-	len = ft_strlen(str_copy);
-	if (flags.field_width > len)
-		padding_len = flags.field_width - len;
-	else
-		padding_len = 0;
-	if (!flags.left_adj && padding_len > 0)
-		ft_print_padding(padding_char, padding_len);
+	len = ft_strlen(*str);
+	if ((size_t)flags.field_width > len)
+		concat_chars_to_str(str, padding_char, (size_t)flags.field_width - len, flags.left_adj);
+	return (0);
+}
+
+size_t	ft_putarg(char *str, t_flags flags)
+{
+	size_t	len;
+	char	*str_copy;
+	
+	str_copy = ft_strdup(str);
+	if (flags.precision >= 0)
+		apply_precision(&str_copy, flags);
+	if (flags.field_width >= 0)
+		apply_padding(&str_copy, flags);
 	ft_putstr_fd(str_copy, 1);
-	if (flags.left_adj && padding_len > 0)
-		ft_print_padding(padding_char, padding_len);
-	len += padding_len;
+	len = ft_strlen(str_copy);
 	free(str_copy);
 	return (len);
 }
@@ -84,12 +109,12 @@ int	read_flags(const char *str, int *i, t_flags *flags, va_list *pargs)
 		else
 			(*i)++;
 	}
-//	printf("?%d %d %d %d %d?", flags->left_adj, flags->zero_padded, flags->precision, flags->field_width, flags->numerical);
+//printf("?%d %d %d %d %d?\n", flags->left_adj, flags->zero_padded, flags->precision, flags->field_width, flags->numerical);
 	// TODO error handling
 	return (0);
 }
 
-int	insert_arg(const char *str, int *i, va_list *pargs)
+size_t	insert_arg(const char *str, int *i, va_list *pargs)
 {
 	t_flags	flags;
 	char	chr[2];
@@ -121,7 +146,7 @@ int	ft_printf(const char *str, ...)
 {
 	va_list	pargs;
 	int		i;
-	int		ins_cnt;
+	size_t		ins_cnt;
 
 	i = 0;
 	ins_cnt = 0;
@@ -129,9 +154,7 @@ int	ft_printf(const char *str, ...)
 	while (str[i])
 	{
 		if (str[i] == '%')
-		{
 			ins_cnt += insert_arg(str, &i, &pargs);
-		}
 		else
 		{
 			write(1, str + i, 1);

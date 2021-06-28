@@ -3,6 +3,7 @@
 
 # include <stdarg.h>
 # include <stdlib.h>
+# include <stddef.h>
 # include <unistd.h>
 typedef struct s_flags {
 	int	left_adj;
