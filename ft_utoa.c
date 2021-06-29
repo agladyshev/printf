@@ -3,7 +3,6 @@
 static unsigned	get_uint_size(unsigned n)
 {
 	unsigned		size;
-	unsigned int	div;
 
 	size = 0;
 	while (n != 0)
@@ -17,7 +16,6 @@ static unsigned	get_uint_size(unsigned n)
 char	*ft_utoa(unsigned n)
 {
 	unsigned	size;
-	unsigned	div;
 	char			*s;
 
 	size = get_uint_size(n);

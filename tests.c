@@ -159,6 +159,16 @@ int	main(void)
 	if (res != ft_res)
 		printf("sys: %d, ft: %d\n", res, ft_res);
 
+	res = printf("|%c|\n", '\0');
+	ft_res = ft_printf("|%c|\n", '\0');
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
+
+	res = printf("|%5.5c|\n", '\0');
+	ft_res = ft_printf("|%5.5c|\n", '\0');
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
+
 
 
 

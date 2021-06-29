@@ -133,18 +133,38 @@ int	print_int(va_list *pargs, t_flags flags)
 
 int	print_char(va_list *pargs, t_flags flags)
 {
-	int		arg;
 	int		res;
 	char	str[2];
-	
+	//FIXME unsigned char?
 	str[0] = va_arg(*pargs, int);
 	str[1] = 0;
-	res = print_str_formatted(str, flags);
+	if (str[0] == 0)
+	{
+		if (flags.field_width > 1)
+			res = flags.field_width;
+		else
+			res = 1;
+		while(flags.field_width > 1 && flags.left_adj == 0)
+		{
+			ft_putchar_fd(' ', 1);
+			flags.field_width--;
+		}
+		ft_putchar_fd('\0', 1);
+		while(flags.field_width > 1 && flags.left_adj == 1)
+		{
+			ft_putchar_fd(' ', 1);
+			flags.field_width--;
+		}
+	}
+	else
+		res = print_str_formatted(str, flags);
 	return (res);
 }
 
 int	print_hex(va_list *pargs, t_flags flags)
 {
+	(void)pargs;
+	(void)flags;
 	return (0);
 }
 

@@ -6,13 +6,13 @@
 #    By: stiffiny <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/06 14:36:27 by stiffiny          #+#    #+#              #
-#    Updated: 2021/06/28 17:34:22 by stiffiny         ###   ########.fr        #
+#    Updated: 2021/06/29 10:13:07 by stiffiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= libftprintf.a
 
-LIST		=	ft_printf.c
+LIST		=	ft_printf.c ft_utoa.c
 
 LIST_TEST	=	tests.c
 
