@@ -57,8 +57,13 @@ size_t	print_str_formatted(char *str, t_flags flags)
 	size_t	len;
 	char	*str_copy;
 
+//	printf("?%d %d?", flags.precision, flags.field_width);
 	if (!str)
+	{
+		if (flags.precision > 0 && flags.precision < 6)
+			flags.precision = 0;
 		str_copy = ft_strdup("(null)");
+	}
 	else
 		str_copy = ft_strdup(str);
 	if (flags.numerical == 1 && flags.precision == 0 && str[0] == '0')
@@ -84,6 +89,14 @@ int	get_flag_value(const char *str, int *i, va_list *pargs, int def_value)
 		num = va_arg(*pargs, int);
 		(*i)++;
 	}
+	/*
+	else if (str[*i] == '0')
+	{
+		num = -1;
+		while (ft_strchr("0123456789", (int)str[*i]))
+			(*i)++;
+	}
+	*/
 	else if (ft_strchr("0123456789", (int)str[*i]))
 	{
 		num = ft_atoi(str + *i);

@@ -194,5 +194,55 @@ int	main(void)
 	if (printf("Address:	|%p|\n", &j) != ft_printf("Address:	|%p|\n", &j))
 		printf("RETURN DIFF\n");
 
+	res = printf(".03|%.03s|\n", 0);
+	ft_res = ft_printf(".03|%.03s|\n", 0);
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
+	res = printf(".04|%.04s|\n", 0);
+	ft_res = ft_printf(".04|%.04s|\n", 0);
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
+	
+	res = printf(".05|%.05s|\n", 0);
+	ft_res = ft_printf(".05|%.05s|\n", 0);
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
+	res = printf(".06|%.06s|\n", 0);
+	ft_res = ft_printf(".06|%.09s|\n", 0);
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
+	
+
+
+	
+	res = printf(".06|%.06s|\n", 0);
+	ft_res = ft_printf(".06|%.09s|\n", 0);
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
+	
+
+
+	res = printf("3.0|%3.0s|\n", 0);
+	ft_res = ft_printf("3.0|%3.0s|\n", 0);
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
+
+	res = printf("3.03|%3.03s|\n", 0);
+	ft_res = ft_printf("3.03|%3.03s|\n", 0);
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
+	
+	res = printf("3.3|%3.3s|\n", 0);
+	ft_res = ft_printf("3.3|%3.3s|\n", 0);
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
+
+	res = printf(".3|%.3s|\n", 0);
+	ft_res = ft_printf(".3|%.3s|\n", 0);
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
+	
+
+
 	return (0);
 }
