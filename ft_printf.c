@@ -52,99 +52,34 @@ int	apply_padding(char **str, t_flags flags)
 	return (0);
 }
 
-size_t	print_str_formatted(char *str, t_flags flags)
+size_t	print_str_fmt(char *str)
 {
 	size_t	len;
-	char	*str_copy;
 
-//	printf("?%d %d?", flags.precision, flags.field_width);
+	ft_putstr_fd(str, 1);
+	len = ft_strlen(str);
+	free(str);
+	return (len);
+}
+
+char	*apply_flags(char *str, t_flags flags)
+{
 	if (!str)
 	{
 		if (flags.precision > 0 && flags.precision < 6)
 			flags.precision = 0;
-		str_copy = ft_strdup("(null)");
+		str = ft_strdup("(null)");
 	}
 	else
-		str_copy = ft_strdup(str);
+		str = ft_strdup(str);
 	if (flags.numerical == 1 && flags.precision == 0 && str[0] == '0')
-		str_copy[0] = 0;
+		str[0] = 0;
 	if (flags.precision >= 0)
-		apply_precision(&str_copy, flags);
+		apply_precision(&str, flags);
 	if (flags.field_width >= 0)
-		apply_padding(&str_copy, flags);
-	ft_putstr_fd(str_copy, 1);
-	len = ft_strlen(str_copy);
-	free(str_copy);
-	return (len);
+		apply_padding(&str, flags);
+	return (str);
 }
-
-int	get_flag_value(const char *str, int *i, va_list *pargs, int def_value)
-{
-	int	num;
-
-	// TODO error handling
-	num = def_value;
-	if (str[*i] == '*')
-	{
-		num = va_arg(*pargs, int);
-		(*i)++;
-	}
-	/*
-	else if (str[*i] == '0')
-	{
-		num = -1;
-		while (ft_strchr("0123456789", (int)str[*i]))
-			(*i)++;
-	}
-	*/
-	else if (ft_strchr("0123456789", (int)str[*i]))
-	{
-		num = ft_atoi(str + *i);
-		while (ft_strchr("0123456789", (int)str[*i]))
-			(*i)++;
-	}
-	return (num);
-}
-
-int	read_flags(const char *str, int *i, t_flags *flags, va_list *pargs)
-{
-	(*i)++;
-	while (!ft_strchr("cspdiuxX%", (int)str[*i]))
-	{
-		if (str[*i] == '-')
-			flags->left_adj = 1;
-		else if (str[*i] == '0')
-			flags->zero_padded = 1;
-		if (ft_strchr("-0", (int)str[*i]))
-			(*i)++;
-		else if (str[*i] == '.')
-		{
-			(*i)++;
-			flags->precision = get_flag_value(str, i, pargs, 0);
-		}
-		else if (flags->field_width < 0)
-			flags->field_width = get_flag_value(str, i, pargs, -1);
-		else
-			(*i)++;
-	}
-//printf("?%d %d %d %d %d?\n", flags->left_adj, flags->zero_padded, flags->precision, flags->field_width, flags->numerical);
-	// TODO error handling
-	return (0);
-}
-
-int	print_int(int arg, t_flags flags)
-{
-	int		res;
-	char	*str;
-
-	str = ft_itoa(arg);
-	if (!str)
-		return (-1);
-	res = print_str_formatted(str, flags);
-	free(str);
-	return (res);
-}
-
 int	print_char(va_list *pargs, t_flags flags)
 {
 	int		res;
@@ -169,91 +104,36 @@ int	print_char(va_list *pargs, t_flags flags)
 			ft_putchar_fd(' ', 1);
 			flags.field_width--;
 		}
+		return (res);
 	}
 	else
-		res = print_str_formatted(str, flags);
-	return (res);
+		return(print_str_fmt(apply_flags(str, flags)));
 }
-
-int	print_unsigned(unsigned long long arg, t_flags flags, char *base)
-{
-	int		res;
-	char	*str;
-
-	str = ft_utoa_base(arg, base);
-	if (!str)
-		return (-1);
-	res = print_str_formatted(str, flags);
-	free(str);
-	return (res);
-}
-
-int	print_hex(unsigned int arg, t_flags flags, char conversion)
-{
-	if (conversion == 'X')
-		print_unsigned(arg, flags, "0123456789ABCDEF");
-	else if (conversion == 'x')
-		print_unsigned(arg, flags, "0123456789abcdef");
-	else if (conversion == 'p')
-	{
-		void *ptr;
-		printf("%llx\n", (unsigned long long)&ptr);
-		print_unsigned((unsigned long long)&arg, flags, "0123456789abcdef");
-	}
-	return (0);
-}
-
-int	print_address(va_list *pargs, t_flags flags)
-{
-	int	res;
-	void	*ptr;
-	unsigned long long address;
-
-	ptr = va_arg(*pargs, void *);
-	if (!ptr)
-	{
-		flags = (t_flags){0, 0, -1, -1, 0};
-		return(print_str_formatted("(nil)", flags));
-	} else
-	{
-		address = (unsigned long long)ptr;
-		ft_putstr_fd("0x", 1);
-		res = print_unsigned(address, flags, "0123456789abcdef");
-		if (res >= 0)
-			return (res + 2);
-		else
-			return (res);
-	}
-}
-
 size_t	print_arg(const char *str, int *i, va_list *pargs)
 {
 	t_flags	flags;
-
-	flags = (t_flags){0, 0, -1, -1, 0};
+	char	*str_fmt;
+	
 	read_flags(str, i, &flags, pargs);
-	if (ft_strchr("diuoxX", (int)str[*i]))
-	{
-		flags.numerical = 1;
-		if (flags.precision < 0)
-			flags.precision = 1;
-		if (str[*i] == 'd' || str[*i] == 'i')
-			return (print_int(va_arg(*pargs, int), flags));
-		else if (str[*i] == 'x' || str[*i] == 'X')
-			return (print_hex(va_arg(*pargs, unsigned int), flags, str[*i]));
-				else if (str[*i] == 'u')
-			return (print_unsigned(va_arg(*pargs, unsigned int), flags, "0123456789"));
-	}
-	else if (str[*i] == 'p')
-			return (print_address(pargs, flags));
-	else if (str[*i] == 's')
-		return (print_str_formatted(va_arg(*pargs, char *), flags));
-	else if (str[*i] == '%')
-		return (print_str_formatted("%", ((t_flags){0, 0, -1, -1, 0})));
-	else if (str[*i] == 'c')
+	if (str[*i] == 'c')
 		return (print_char(pargs, flags));
-	return (-1);
-	//TODO error handling
+	else if (str[*i] == 'p')
+		str_fmt = ptr_to_str(pargs, &flags);
+	else if (str[*i] == 's')
+	{
+		str_fmt = va_arg(*pargs, char *);
+		if (str_fmt)
+			str_fmt = ft_strdup(str_fmt);
+	}
+	else if (str[*i] == '%')
+		str_fmt = ft_strdup("%"); 
+	else if (str[*i] == 'd' || str[*i] == 'i')
+		str_fmt = ft_itoa(va_arg(*pargs, int));
+	else if (str[*i] == 'x' || str[*i] == 'X')
+		str_fmt = hex_to_str(va_arg(*pargs, unsigned int), str[*i]);
+	else if (str[*i] == 'u')
+		str_fmt = ft_utoa_base(va_arg(*pargs, unsigned int), "0123456789");
+	return (print_str_fmt(apply_flags(str_fmt, flags)));
 }
 
 int	ft_printf(const char *str, ...)
