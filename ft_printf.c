@@ -83,8 +83,7 @@ char	*apply_flags(char *str, t_flags flags)
 int	print_char(va_list *pargs, t_flags flags)
 {
 	int		res;
-	char	str[2];
-	//FIXME unsigned char?
+	char	str[2]; //FIXME unsigned char?
 	str[0] = va_arg(*pargs, int);
 	str[1] = 0;
 	if (str[0] == 0)
@@ -115,6 +114,7 @@ size_t	print_arg(const char *str, int *i, va_list *pargs)
 	char	*str_fmt;
 	
 	read_flags(str, i, &flags, pargs);
+	adjust_flags_conversion(&flags, str[*i]);
 	if (str[*i] == 'c')
 		return (print_char(pargs, flags));
 	else if (str[*i] == 'p')

@@ -21,6 +21,18 @@ int	get_flag_value(const char *str, int *i, va_list *pargs, int def_value)
 	return (num);
 }
 
+void	adjust_flags_conversion(t_flags *flags, char conversion) 
+{
+	if (conversion == '%')
+		*flags = (t_flags){0, 0, -1, -1, 0};
+	else if (ft_strchr("diuoxX", (int)conversion))
+	{
+		flags->numerical = 1;
+		if (flags->precision < 0)
+			flags->precision = 1;
+	}
+}
+
 int	read_flags(const char *str, int *i, t_flags *flags, va_list *pargs)
 {
 	*flags = (t_flags){0, 0, -1, -1, 0};
@@ -43,16 +55,7 @@ int	read_flags(const char *str, int *i, t_flags *flags, va_list *pargs)
 		else
 			(*i)++;
 	}
-	if (str[*i] == '%')
-		*flags = (t_flags){0, 0, -1, -1, 0};
-	else if (ft_strchr("diuoxX", (int)str[*i]))
-	{
-		flags->numerical = 1;
-		if (flags->precision < 0)
-			flags->precision = 1;
-	}
 	// TODO error handling
 	return (0);
 }
-
 
