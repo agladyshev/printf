@@ -13,8 +13,7 @@ typedef struct s_flags {
 	int	numerical;
 }	t_flags;
 
-char	*ft_utoa(unsigned int num);
-char	*ft_utoa_base(unsigned int num, char *base);
+char	*ft_utoa_base(unsigned long long num, char *base);
 int	ft_printf(const char *str, ...);
 
 #endif

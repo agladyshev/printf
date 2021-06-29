@@ -1,7 +1,7 @@
 #include "libftprintf.h"
 #include "libft/libft.h"
 
-static unsigned int	get_uint_size(unsigned int n, unsigned int base_n)
+static unsigned int	get_uint_size(unsigned long long n, size_t base_n)
 {
 	unsigned int	size;
 
@@ -16,9 +16,9 @@ static unsigned int	get_uint_size(unsigned int n, unsigned int base_n)
 	return (size);
 }
 
-char	*ft_utoa_base(unsigned int n, char *base)
+char	*ft_utoa_base(unsigned long long n, char *base)
 {
-	unsigned int	size;
+	unsigned long long	size;
 	char			*s;
 	size_t			base_n;
 

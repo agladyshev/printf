@@ -162,7 +162,7 @@ int	print_char(va_list *pargs, t_flags flags)
 	return (res);
 }
 
-int	print_unsigned(unsigned int arg, t_flags flags, char *base)
+int	print_unsigned(unsigned long long arg, t_flags flags, char *base)
 {
 	int		res;
 	char	*str;
@@ -182,8 +182,25 @@ int	print_hex(unsigned int arg, t_flags flags, char conversion)
 	else if (conversion == 'x')
 		print_unsigned(arg, flags, "0123456789abcdef");
 	else if (conversion == 'p')
-		print_unsigned((unsigned long)&arg, flags, "0123456789abcdef");
+	{
+		void *ptr;
+		printf("%llx\n", (unsigned long long)&ptr);
+		print_unsigned((unsigned long long)&arg, flags, "0123456789abcdef");
+	}
 	return (0);
+}
+
+int	print_address(unsigned long long arg, t_flags flags)
+{
+	int	res;
+//	flags = (t_flags){0, 0, -1, -1, 0};
+	ft_putstr_fd("0x", 1);
+	res = print_unsigned(arg, flags, "0123456789abcdef");
+	if (res >= 0)
+		return (res + 2);
+	else
+		return (res);
+
 }
 
 size_t	print_arg(const char *str, int *i, va_list *pargs)
@@ -192,18 +209,20 @@ size_t	print_arg(const char *str, int *i, va_list *pargs)
 
 	flags = (t_flags){0, 0, -1, -1, 0};
 	read_flags(str, i, &flags, pargs);
-	if (ft_strchr("diuoxpX", (int)str[*i]))
+	if (ft_strchr("diuoxX", (int)str[*i]))
 	{
 		flags.numerical = 1;
 		if (flags.precision < 0)
 			flags.precision = 1;
 		if (str[*i] == 'd' || str[*i] == 'i')
 			return (print_int(va_arg(*pargs, int), flags));
-		else if (str[*i] == 'x' || str[*i] == 'X' || str[*i] == 'p')
+		else if (str[*i] == 'x' || str[*i] == 'X')
 			return (print_hex(va_arg(*pargs, unsigned int), flags, str[*i]));
-		else if (str[*i] == 'u')
+				else if (str[*i] == 'u')
 			return (print_unsigned(va_arg(*pargs, unsigned int), flags, "0123456789"));
 	}
+	else if (str[*i] == 'p')
+			return (print_address((unsigned long long)va_arg(*pargs, void *), flags));
 	else if (str[*i] == 's')
 		return (print_str_formatted(va_arg(*pargs, char *), flags));
 	else if (str[*i] == '%')
