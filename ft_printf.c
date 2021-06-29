@@ -30,9 +30,9 @@ int	apply_precision(char **str, t_flags flags)
 	size_t	len;
 
 	len = ft_strlen(*str);
-	if (flags.numerical && (size_t)flags.precision > len)
+	if (flags.numerical && (unsigned)flags.precision > len)
 		concat_chars_to_str(str, '0', ((size_t)flags.precision - len), 0);
-	if (flags.numerical == 0 && (size_t)flags.precision < len)
+	else if (flags.numerical == 0 && (size_t)flags.precision < len)
 		(*str)[flags.precision] = 0;
 	return (0);
 }
@@ -58,6 +58,8 @@ size_t	print_str_formatted(char *str, t_flags flags)
 	char	*str_copy;
 
 	str_copy = ft_strdup(str);
+	if (flags.numerical == 1 && flags.precision == 0 && str[0] == '0')
+		str_copy[0] = 0;
 	if (flags.precision >= 0)
 		apply_precision(&str_copy, flags);
 	if (flags.field_width >= 0)
@@ -167,20 +169,24 @@ size_t	print_arg(const char *str, int *i, va_list *pargs)
 
 	flags = (t_flags){0, 0, -1, -1, 0};
 	read_flags(str, i, &flags, pargs);
-	if (ft_strchr("diuxX", (int)str[*i]))
+	if (ft_strchr("diuoxpX", (int)str[*i]))
+	{
 		flags.numerical = 1;
-	if (str[*i] == 's')
+		if (flags.precision < 0)
+			flags.precision = 1;
+		if (str[*i] == 'd' || str[*i] == 'i')
+			return (print_int(pargs, flags));
+		else if (str[*i] == 'x' || str[*i] == 'X' || str[*i] == 'p')
+			return (print_hex(pargs, flags));
+		else if (str[*i] == 'u')
+			return (print_unsigned(pargs, flags));
+	}
+	else if (str[*i] == 's')
 		return (print_str_formatted(va_arg(*pargs, char *), flags));
 	else if (str[*i] == '%')
 		return (print_str_formatted("%", ((t_flags){0, 0, -1, -1, 0})));
 	else if (str[*i] == 'c')
 		return (print_char(pargs, flags));
-	else if (str[*i] == 'd' || str[*i] == 'i')
-		return (print_int(pargs, flags));
-	else if (str[*i] == 'x' || str[*i] == 'X' || str[*i] == 'p')
-		return (print_hex(pargs, flags));
-	else if (str[*i] == 'u')
-		return (print_unsigned(pargs, flags));
 	return (-1);
 	//TODO error handling
 }

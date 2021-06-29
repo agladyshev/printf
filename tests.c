@@ -153,7 +153,14 @@ int	main(void)
 	ft_res = ft_printf("5.5|%5.5d|\n", 123);
 	if (res != ft_res)
 		printf("sys: %d, ft: %d\n", res, ft_res);
-	
+
+	res = printf(".0|%.0d|\n", 0);
+	ft_res = ft_printf(".0|%.0d|\n", 0);
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
+
+
+
 
 	return (0);
 }
