@@ -203,17 +203,27 @@ int	print_hex(unsigned int arg, t_flags flags, char conversion)
 	return (0);
 }
 
-int	print_address(unsigned long long arg, t_flags flags)
+int	print_address(va_list *pargs, t_flags flags)
 {
 	int	res;
-//	flags = (t_flags){0, 0, -1, -1, 0};
-	ft_putstr_fd("0x", 1);
-	res = print_unsigned(arg, flags, "0123456789abcdef");
-	if (res >= 0)
-		return (res + 2);
-	else
-		return (res);
+	void	*ptr;
+	unsigned long long address;
 
+	ptr = va_arg(*pargs, void *);
+	if (!ptr)
+	{
+		flags = (t_flags){0, 0, -1, -1, 0};
+		return(print_str_formatted("(nil)", flags));
+	} else
+	{
+		address = (unsigned long long)ptr;
+		ft_putstr_fd("0x", 1);
+		res = print_unsigned(address, flags, "0123456789abcdef");
+		if (res >= 0)
+			return (res + 2);
+		else
+			return (res);
+	}
 }
 
 size_t	print_arg(const char *str, int *i, va_list *pargs)
@@ -235,7 +245,7 @@ size_t	print_arg(const char *str, int *i, va_list *pargs)
 			return (print_unsigned(va_arg(*pargs, unsigned int), flags, "0123456789"));
 	}
 	else if (str[*i] == 'p')
-			return (print_address((unsigned long long)va_arg(*pargs, void *), flags));
+			return (print_address(pargs, flags));
 	else if (str[*i] == 's')
 		return (print_str_formatted(va_arg(*pargs, char *), flags));
 	else if (str[*i] == '%')
