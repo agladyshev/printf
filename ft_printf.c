@@ -119,13 +119,11 @@ int	read_flags(const char *str, int *i, t_flags *flags, va_list *pargs)
 	return (0);
 }
 
-int	print_int(va_list *pargs, t_flags flags)
+int	print_int(int arg, t_flags flags)
 {
-	int		arg;
 	int		res;
 	char	*str;
 
-	arg = va_arg(*pargs, int);
 	str = ft_itoa(arg);
 	if (!str)
 		return (-1);
@@ -164,26 +162,28 @@ int	print_char(va_list *pargs, t_flags flags)
 	return (res);
 }
 
-int	print_hex(va_list *pargs, t_flags flags)
+int	print_unsigned(unsigned int arg, t_flags flags, char *base)
 {
-	(void)pargs;
-	(void)flags;
-	return (0);
-}
-
-int	print_unsigned(va_list *pargs, t_flags flags)
-{
-	int		arg;
 	int		res;
 	char	*str;
 
-	arg = va_arg(*pargs, int);
-	str = ft_utoa(arg);
+	str = ft_utoa_base(arg, base);
 	if (!str)
 		return (-1);
 	res = print_str_formatted(str, flags);
 	free(str);
 	return (res);
+}
+
+int	print_hex(unsigned int arg, t_flags flags, char conversion)
+{
+	if (conversion == 'X')
+		print_unsigned(arg, flags, "0123456789ABCDEF");
+	else if (conversion == 'x')
+		print_unsigned(arg, flags, "0123456789abcdef");
+	else if (conversion == 'p')
+		print_unsigned((unsigned long)&arg, flags, "0123456789abcdef");
+	return (0);
 }
 
 size_t	print_arg(const char *str, int *i, va_list *pargs)
@@ -198,11 +198,11 @@ size_t	print_arg(const char *str, int *i, va_list *pargs)
 		if (flags.precision < 0)
 			flags.precision = 1;
 		if (str[*i] == 'd' || str[*i] == 'i')
-			return (print_int(pargs, flags));
+			return (print_int(va_arg(*pargs, int), flags));
 		else if (str[*i] == 'x' || str[*i] == 'X' || str[*i] == 'p')
-			return (print_hex(pargs, flags));
+			return (print_hex(va_arg(*pargs, unsigned int), flags, str[*i]));
 		else if (str[*i] == 'u')
-			return (print_unsigned(pargs, flags));
+			return (print_unsigned(va_arg(*pargs, unsigned int), flags, "0123456789"));
 	}
 	else if (str[*i] == 's')
 		return (print_str_formatted(va_arg(*pargs, char *), flags));

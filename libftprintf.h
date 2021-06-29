@@ -14,6 +14,7 @@ typedef struct s_flags {
 }	t_flags;
 
 char	*ft_utoa(unsigned int num);
+char	*ft_utoa_base(unsigned int num, char *base);
 int	ft_printf(const char *str, ...);
 
 #endif

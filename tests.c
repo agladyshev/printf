@@ -181,7 +181,18 @@ int	main(void)
 		printf("sys: %d, ft: %d\n", res, ft_res);
 
 
+	int j;
 
+	j = 0;
+
+	if (printf("Address:	|%p|\n", &j) != ft_printf("Address:	|%p|\n", &j))
+		printf("RETURN DIFF\n");
+
+
+	j = 123;
+
+	if (printf("Address:	|%p|\n", &j) != ft_printf("Address:	|%p|\n", &j))
+		printf("RETURN DIFF\n");
 
 	return (0);
 }
