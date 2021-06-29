@@ -28,10 +28,22 @@ int	concat_chars_to_str(char **str, char c, int len, int left_adj)
 int	apply_precision(char **str, t_flags flags)
 {
 	size_t	len;
+	char 	*swap;
 
 	len = ft_strlen(*str);
 	if (flags.numerical && (unsigned)flags.precision > len)
-		concat_chars_to_str(str, '0', ((size_t)flags.precision - len), 0);
+	{
+		if ((*str)[0] == '-')
+		{
+			swap = *str;
+			*str = ft_strdup((*str) + 1);
+			concat_chars_to_str(str, '0', ((size_t)flags.precision - len + 1), 0);
+			concat_chars_to_str(str, '-', 1, 0);
+			free(swap);
+		}
+		else
+			concat_chars_to_str(str, '0', ((size_t)flags.precision - len), 0);
+	}
 	else if (flags.numerical == 0 && (size_t)flags.precision < len)
 		(*str)[flags.precision] = 0;
 	return (0);
@@ -41,14 +53,28 @@ int	apply_padding(char **str, t_flags flags)
 {
 	char	padding_char;
 	size_t	len;
+	char	*swap;
 
+	len = ft_strlen(*str);
 	padding_char = ' ';
 	if (flags.zero_padded && flags.numerical)
 		padding_char = '0';
-	len = ft_strlen(*str);
 	if ((size_t)flags.field_width > len)
-		concat_chars_to_str(str, padding_char,
-			(size_t)flags.field_width - len, flags.left_adj);
+	{
+		if (flags.numerical && flags.zero_padded && (*str)[0] == '-' && !flags.left_adj)
+		{
+			swap = *str;
+			*str = ft_strdup((*str) + 1);
+			concat_chars_to_str(str, '0', ((size_t)flags.field_width - len), 0);
+			concat_chars_to_str(str, '-', 1, 0);
+			free(swap);
+		}
+		else
+		{
+			concat_chars_to_str(str, padding_char,
+				(size_t)flags.field_width - len, flags.left_adj);
+		}
+	}
 	return (0);
 }
 

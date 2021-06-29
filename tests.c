@@ -23,6 +23,7 @@ int	main(void)
 {
 	int res;
 	int ft_res;
+	/*
 	int i;
 
 	i = 15;
@@ -241,8 +242,19 @@ int	main(void)
 	ft_res = ft_printf(".3|%.3s|\n", 0);
 	if (res != ft_res)
 		printf("sys: %d, ft: %d\n", res, ft_res);
-	
-
+	*/
+	res = printf(".5|%.6d|\n", -3);
+	ft_res = ft_printf(".6|%.6d|\n", -3);
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
+	res = printf("05|%05d|\n", -3);
+	ft_res = ft_printf("05|%05d|\n", -3);
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
+	res = printf("5|%5d|\n", -3);
+	ft_res = ft_printf("5|%5d|\n", -3);
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
 
 	return (0);
 }
