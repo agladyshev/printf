@@ -169,6 +169,17 @@ int	main(void)
 	if (res != ft_res)
 		printf("sys: %d, ft: %d\n", res, ft_res);
 
+	res = printf("|hello, %s|\n", "world");
+	ft_res = ft_printf("|hello, %s|\n", "world");
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
+
+
+	res = printf("|hello, %s|\n", 0);
+	ft_res = ft_printf("|hello, %s|\n", 0);
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
+
 
 
 

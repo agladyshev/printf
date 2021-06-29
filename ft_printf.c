@@ -57,7 +57,10 @@ size_t	print_str_formatted(char *str, t_flags flags)
 	size_t	len;
 	char	*str_copy;
 
-	str_copy = ft_strdup(str);
+	if (!str)
+		str_copy = ft_strdup("(null)");
+	else
+		str_copy = ft_strdup(str);
 	if (flags.numerical == 1 && flags.precision == 0 && str[0] == '0')
 		str_copy[0] = 0;
 	if (flags.precision >= 0)
