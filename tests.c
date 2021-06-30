@@ -31,6 +31,7 @@ int	main(void)
 		printf("RETURN DIFF\n");
 	if (printf("ESCAPE:	|%%|\n") != ft_printf("ESCAPE:	|%%|\n"))
 		printf("RETURN DIFF\n");
+
 	printf("Test flags INTEGER\n");
 	res = printf("-	|%-d|\n", 123);
 	ft_res = ft_printf("-	|%-d|\n", 123);
@@ -154,18 +155,16 @@ int	main(void)
 	ft_res = ft_printf("|%5.5c|\n", '\0');
 	if (res != ft_res)
 		printf("sys: %d, ft: %d\n", res, ft_res);
-
-	res = printf("|hello, %s|\n", "world");
-	ft_res = ft_printf("|hello, %s|\n", "world");
+	*/
+	res = printf("|hello, %s|\n", "wo");
+	ft_res = ft_printf("|hello, %s|\n", "wo");
 	if (res != ft_res)
 		printf("sys: %d, ft: %d\n", res, ft_res);
-
-
+	/*
 	res = printf("|hello, %s|\n", 0);
 	ft_res = ft_printf("|hello, %s|\n", 0);
 	if (res != ft_res)
 		printf("sys: %d, ft: %d\n", res, ft_res);
-
 
 	int j;
 
@@ -250,7 +249,7 @@ int	main(void)
 	int_max = -int_min;
 	printf("%d %d\n", int_min, int_max);
 	*/
-
+/*
 	printf("|%r s|\n", "yo");
 
 
@@ -268,6 +267,16 @@ int	main(void)
 	ft_printf("|% rr |\n");	
 
 	printf("|%4 rr |\n");
+*/
+/*
+	ft_printf("%-5\n");
 
+	ft_printf("%\n");
+	ft_printf("%5\n");
+	ft_printf("%05\n");
+	ft_printf("%-05\n");
+	ft_printf("%-5\n");
+	ft_printf("DONE\n");
+	*/
 	return (0);
 }

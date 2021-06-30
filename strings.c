@@ -6,7 +6,7 @@
 /*   By: stiffiny <stiffiny@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 14:22:24 by stiffiny          #+#    #+#             */
-/*   Updated: 2021/06/30 14:22:26 by stiffiny         ###   ########.fr       */
+/*   Updated: 2021/06/30 15:10:13 by stiffiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,12 @@ size_t	print_str_fmt(char *str)
 {
 	size_t	len;
 
-	ft_putstr_fd(str, 1);
-	len = ft_strlen(str);
-	free(str);
+	len = 0;
+	if (str)
+	{
+		ft_putstr_fd(str, 1);
+		len = ft_strlen(str);
+		free(str);
+	}
 	return (len);
 }

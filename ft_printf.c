@@ -6,7 +6,7 @@
 /*   By: stiffiny <stiffiny@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/30 14:22:33 by stiffiny          #+#    #+#             */
-/*   Updated: 2021/06/30 14:38:27 by stiffiny         ###   ########.fr       */
+/*   Updated: 2021/06/30 15:59:30 by stiffiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ char	*apply_flags(char *str, t_flags flags)
 			flags.precision = 0;
 		str = ft_strdup("(null)");
 	}
-	else
-		str = ft_strdup(str);
 	if (flags.numerical == 1 && flags.precision == 0 && str[0] == '0')
 		str[0] = 0;
 	if (flags.precision >= 0)
@@ -58,7 +56,7 @@ int	print_char(va_list *pargs, t_flags flags)
 		}
 		return (res);
 	}
-	return (print_str_fmt(apply_flags(str, flags)));
+	return (print_str_fmt(apply_flags(ft_strdup(str), flags)));
 }
 
 size_t	print_arg(const char *str, int *i, va_list *pargs)
@@ -66,6 +64,7 @@ size_t	print_arg(const char *str, int *i, va_list *pargs)
 	t_flags	flags;
 	char	*str_fmt;
 
+	str_fmt = 0;
 	if (!read_flags(str, i, &flags, pargs))
 		return (0);
 	adjust_flags_conversion(&flags, str[*i]);
