@@ -7,7 +7,8 @@ int	main(void)
 {
 	int res;
 	int ft_res;
-	
+
+	/*
 	int i;
 
 	i = 15;
@@ -248,6 +249,18 @@ int	main(void)
 	int_min = INT_MIN + 1;
 	int_max = -int_min;
 	printf("%d %d\n", int_min, int_max);
+	*/
+
+	printf("|%r s|\n", "yo");
+
+
+	res = printf("%% *.5i 42 == |% *.5i|\n", 4, 42);
+	ft_res = ft_printf("%% *.5i 42 == |% *.5i|\n", 4, 42);
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
+
+	//% *.5i 42 == | 00042|
+	
 
 	return (0);
 }

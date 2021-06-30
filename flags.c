@@ -75,12 +75,13 @@ int	read_flags(const char *str, int *i, t_flags *flags, va_list *pargs)
 			flags->precision = 0;
 			get_flag_value(str, i, pargs, &(flags->precision));
 		}
-		else if (flags->fw_init == 0)
+		else if (flags->fw_init == 0 && ft_strchr("-0123456789*", (int)str[*i]))
 			flags->field_width = get_field_width(str, i, pargs, flags);
+		else if (str[*i] == ' ')
+			ft_putchar_fd(str[(*i)++], 1);
 		else
 			(*i)++;
 	}
-	// TODO error handling
 	return (0);
 }
 
