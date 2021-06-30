@@ -260,7 +260,14 @@ int	main(void)
 		printf("sys: %d, ft: %d\n", res, ft_res);
 
 	//% *.5i 42 == | 00042|
+	//
+	printf("|%hh|\n");
+	ft_printf("|%hh|\n");	
 	
+	printf("|% rr |\n");
+	ft_printf("|% rr |\n");	
+
+	printf("|%4 rr |\n");
 
 	return (0);
 }

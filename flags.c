@@ -57,11 +57,22 @@ void	adjust_flags_conversion(t_flags *flags, char conversion)
 	}
 }
 
+int	revert_index(const char *str, int *i)
+{
+	if (str[*i] == 0)
+	{
+		while (str[*i] != '%')
+			(*i)--;
+		return (0);
+	}
+	return (1);
+}
+
 int	read_flags(const char *str, int *i, t_flags *flags, va_list *pargs)
 {
 	*flags = (t_flags){0, 0, -1, 0, 0, 0};
 	(*i)++;
-	while (!ft_strchr("cspdiuoxX%", (int)str[*i]))
+	while (!ft_strchr("cspdiuoxX%", (int)str[*i]) && (int)str[*i])
 	{
 		if (str[*i] == '-')
 			flags->left_adj = 1;
@@ -82,6 +93,6 @@ int	read_flags(const char *str, int *i, t_flags *flags, va_list *pargs)
 		else
 			(*i)++;
 	}
-	return (0);
+	return (revert_index(str, i));
 }
 

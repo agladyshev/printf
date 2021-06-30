@@ -133,7 +133,8 @@ size_t	print_arg(const char *str, int *i, va_list *pargs)
 	t_flags	flags;
 	char	*str_fmt;
 	
-	read_flags(str, i, &flags, pargs);
+	if (!read_flags(str, i, &flags, pargs))
+		return (0);
 	adjust_flags_conversion(&flags, str[*i]);
 	if (str[*i] == 'c')
 		return (print_char(pargs, flags));
@@ -176,7 +177,8 @@ int	ft_printf(const char *str, ...)
 			write(1, str + i, 1);
 			printed_chars++;
 		}
-		i++;
+		if (str[i])
+			i++;
 	}
 	va_end(pargs);
 	return (printed_chars);
