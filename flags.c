@@ -1,30 +1,50 @@
 #include "libft/libft.h"
 #include "libftprintf.h"
 
-int	get_flag_value(const char *str, int *i, va_list *pargs, int def_value)
+int	get_flag_value(const char *str, int *i, va_list *pargs, int *flag)
 {
-	int	num;
-
 	// TODO error handling
-	num = def_value;
 	if (str[*i] == '*')
 	{
-		num = va_arg(*pargs, int);
+		*flag = va_arg(*pargs, int);
 		(*i)++;
+		return (1);
 	}
 	else if (ft_strchr("0123456789", (int)str[*i]))
 	{
-		num = ft_atoi(str + *i);
+		*flag = ft_atoi(str + *i);
 		while (ft_strchr("0123456789", (int)str[*i]))
 			(*i)++;
+		return (1);
 	}
-	return (num);
+	return (0);
+}
+
+int	get_field_width(const char *str, int *i, va_list *pargs, t_flags *flags)
+{
+	int 	num;
+	int	res;
+
+	num = 0;
+	res = get_flag_value(str, i, pargs, &num);
+	if (res)
+	{
+		flags->fw_init = 1;
+		if (num < 0)
+		{
+			flags->left_adj = 1;
+			return (unsigned int)(-num);
+		}
+		else
+			return (unsigned int)(num);
+	}
+	return (flags->field_width);
 }
 
 void	adjust_flags_conversion(t_flags *flags, char conversion) 
 {
 	if (conversion == '%')
-		*flags = (t_flags){0, 0, -1, -1, 0};
+		*flags = (t_flags){0, 0, -1, 0, 0, 0};
 	else if (ft_strchr("diuoxX", (int)conversion))
 	{
 		flags->numerical = 1;
@@ -37,7 +57,7 @@ void	adjust_flags_conversion(t_flags *flags, char conversion)
 
 int	read_flags(const char *str, int *i, t_flags *flags, va_list *pargs)
 {
-	*flags = (t_flags){0, 0, -1, -1, 0};
+	*flags = (t_flags){0, 0, -1, 0, 0, 0};
 	(*i)++;
 	while (!ft_strchr("cspdiuxX%", (int)str[*i]))
 	{
@@ -50,10 +70,11 @@ int	read_flags(const char *str, int *i, t_flags *flags, va_list *pargs)
 		else if (str[*i] == '.')
 		{
 			(*i)++;
-			flags->precision = get_flag_value(str, i, pargs, 0);
+			flags->precision = 0;
+			get_flag_value(str, i, pargs, &(flags->precision));
 		}
-		else if (flags->field_width < 0)
-			flags->field_width = get_flag_value(str, i, pargs, -1);
+		else if (flags->fw_init == 0)
+			flags->field_width = get_field_width(str, i, pargs, flags);
 		else
 			(*i)++;
 	}

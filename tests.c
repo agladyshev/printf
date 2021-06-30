@@ -1,29 +1,13 @@
 #include <stdio.h>
 #include "libftprintf.h"
-/*
-int	run_test(char *str, ...)
-{
-	int res;
-	int ft_res;
-	va_list pargs;
-
-
-
-	ft_putstr_fd(str)
-	res = printf(str, "Hello");
-	ft_res = ft_printf(str, "Hello");
-	if (res == ft_res)
-		printf("RETURN EQUAL\n");
-	else
-		printf("RETURN DIFF\n");
-}
-*/#include <stddef.h>
+#include <limits.h>
+#include <stddef.h>
 
 int	main(void)
 {
 	int res;
 	int ft_res;
-	/*
+	
 	int i;
 
 	i = 15;
@@ -242,7 +226,6 @@ int	main(void)
 	ft_res = ft_printf(".3|%.3s|\n", 0);
 	if (res != ft_res)
 		printf("sys: %d, ft: %d\n", res, ft_res);
-	*/
 	res = printf(".5|%.6d|\n", -3);
 	ft_res = ft_printf(".6|%.6d|\n", -3);
 	if (res != ft_res)
@@ -255,6 +238,16 @@ int	main(void)
 	ft_res = ft_printf("5|%5d|\n", -3);
 	if (res != ft_res)
 		printf("sys: %d, ft: %d\n", res, ft_res);
+	
+	res = printf("*|%*s|\n", -32, "abc");
+	ft_res = ft_printf("*|%*s|\n", -32, "abc");
+	if (res != ft_res)
+		printf("sys: %d, ft: %d\n", res, ft_res);
+	int int_min;
+	int int_max;
+	int_min = INT_MIN + 1;
+	int_max = -int_min;
+	printf("%d %d\n", int_min, int_max);
 
 	return (0);
 }

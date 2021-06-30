@@ -61,13 +61,13 @@ int	apply_padding(char **str, t_flags flags)
 	padding_char = ' ';
 	if (flags.zero_padded && flags.numerical)
 		padding_char = '0';
-	if ((size_t)flags.field_width > len)
+	if (flags.fw_init && flags.field_width > len)
 	{
 		if (flags.numerical && flags.zero_padded && (*str)[0] == '-' && !flags.left_adj)
-			insert_0_to_neg(str, (size_t)flags.field_width - len);
+			insert_0_to_neg(str, flags.field_width - len);
 		else
 			concat_chars_to_str(str, padding_char,
-				(size_t)flags.field_width - len, flags.left_adj);
+				flags.field_width - len, flags.left_adj);
 	}
 	return (0);
 }
@@ -96,7 +96,7 @@ char	*apply_flags(char *str, t_flags flags)
 		str[0] = 0;
 	if (flags.precision >= 0)
 		apply_precision(&str, flags);
-	if (flags.field_width >= 0)
+	if (flags.fw_init)
 		apply_padding(&str, flags);
 	return (str);
 }

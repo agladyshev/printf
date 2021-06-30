@@ -9,12 +9,13 @@ typedef struct s_flags {
 	int	left_adj;
 	int	zero_padded;
 	int	precision;
-	int	field_width;
+	unsigned int field_width;
+	unsigned int fw_init;
 	int	numerical;
 }	t_flags;
 
 char	*ft_utoa_base(unsigned long long num, char *base);
-int	get_flag_value(const char *str, int *i, va_list *pargs, int def_value);
+int	get_flag_value(const char *str, int *i, va_list *pargs, int *flag);
 int	read_flags(const char *str, int *i, t_flags *flags, va_list *pargs);
 void	adjust_flags_conversion(t_flags *flags, char conversion);
 int	ft_printf(const char *str, ...);
