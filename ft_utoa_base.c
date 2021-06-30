@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_utoa_base.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: stiffiny <stiffiny@student.21-school.ru>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/30 14:22:55 by stiffiny          #+#    #+#             */
+/*   Updated: 2021/06/30 14:23:47 by stiffiny         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libftprintf.h"
 #include "libft/libft.h"
 
@@ -19,8 +31,8 @@ static unsigned int	get_uint_size(unsigned long long n, size_t base_n)
 char	*ft_utoa_base(unsigned long long n, char *base)
 {
 	unsigned long long	size;
-	char			*s;
-	size_t			base_n;
+	char				*s;
+	size_t				base_n;
 
 	base_n = ft_strlen(base);
 	size = get_uint_size(n, base_n);

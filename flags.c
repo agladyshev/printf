@@ -1,9 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   flags.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: stiffiny <stiffiny@student.21-school.ru>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/30 14:22:04 by stiffiny          #+#    #+#             */
+/*   Updated: 2021/06/30 14:29:31 by stiffiny         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft/libft.h"
 #include "libftprintf.h"
 
+/*
+*FIXME REWRITE EVERTYTHING
+*/
+
 int	get_flag_value(const char *str, int *i, va_list *pargs, int *flag)
 {
-	// TODO error handling
 	if (str[*i] == '*')
 	{
 		*flag = va_arg(*pargs, int);
@@ -22,7 +37,7 @@ int	get_flag_value(const char *str, int *i, va_list *pargs, int *flag)
 
 int	get_field_width(const char *str, int *i, va_list *pargs, t_flags *flags)
 {
-	int 	num;
+	int	num;
 	int	res;
 
 	num = 0;
@@ -33,15 +48,15 @@ int	get_field_width(const char *str, int *i, va_list *pargs, t_flags *flags)
 		if (num < 0)
 		{
 			flags->left_adj = 1;
-			return (unsigned int)(-num);
+			return ((unsigned int)(-num));
 		}
 		else
-			return (unsigned int)(num);
+			return ((unsigned int)(num));
 	}
 	return (flags->field_width);
 }
 
-void	adjust_flags_conversion(t_flags *flags, char conversion) 
+void	adjust_flags_conversion(t_flags *flags, char conversion)
 {
 	if (conversion == '%')
 		*flags = (t_flags){0, 0, -1, 0, 0, 0};
@@ -95,4 +110,3 @@ int	read_flags(const char *str, int *i, t_flags *flags, va_list *pargs)
 	}
 	return (revert_index(str, i));
 }
-

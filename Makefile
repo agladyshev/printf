@@ -3,16 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: stiffiny <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: stiffiny <stiffiny@student.21-school.ru>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/05/06 14:36:27 by stiffiny          #+#    #+#              #
-#    Updated: 2021/06/29 17:01:08 by stiffiny         ###   ########.fr        #
+#    Created: 2021/06/30 14:39:16 by stiffiny          #+#    #+#              #
+#    Updated: 2021/06/30 14:39:18 by stiffiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= libftprintf.a
 
-LIST		=	ft_printf.c ft_utoa_base.c conversions.c flags.c
+LIST		=	ft_printf.c ft_utoa_base.c conversions.c\
+			flags.c strings.c
 
 LIST_TEST	=	tests.c
 
