@@ -52,6 +52,8 @@ void	adjust_flags_conversion(t_flags *flags, char conversion)
 			flags->precision = 1;
 		else
 			flags->zero_padded = 0;
+		if (flags->left_adj == 1)
+			flags->zero_padded = 0;
 	}
 }
 
