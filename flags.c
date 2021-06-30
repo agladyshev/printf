@@ -61,7 +61,7 @@ int	read_flags(const char *str, int *i, t_flags *flags, va_list *pargs)
 {
 	*flags = (t_flags){0, 0, -1, 0, 0, 0};
 	(*i)++;
-	while (!ft_strchr("cspdiuxX%", (int)str[*i]))
+	while (!ft_strchr("cspdiuoxX%", (int)str[*i]))
 	{
 		if (str[*i] == '-')
 			flags->left_adj = 1;

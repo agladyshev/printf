@@ -153,6 +153,8 @@ size_t	print_arg(const char *str, int *i, va_list *pargs)
 		str_fmt = hex_to_str(va_arg(*pargs, unsigned int), str[*i]);
 	else if (str[*i] == 'u')
 		str_fmt = ft_utoa_base(va_arg(*pargs, unsigned int), "0123456789");
+	else if (str[*i] == 'o')
+		str_fmt = ft_utoa_base(va_arg(*pargs, unsigned int), "01234567");
 	return (print_str_fmt(apply_flags(str_fmt, flags)));
 }
 
