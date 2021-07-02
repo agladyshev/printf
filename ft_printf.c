@@ -34,7 +34,7 @@ int	print_char(va_list *pargs, t_flags flags)
 {
 	int	res;
 	int	arg;
-	
+
 	arg = va_arg(*pargs, int);
 	if (flags.field_width > 1)
 		res = flags.field_width;

@@ -15,8 +15,6 @@ NAME		= libftprintf.a
 LIST		=	ft_printf.c ft_utoa_base.c conversions.c\
 			flags.c strings.c
 
-LIST_TEST	=	tests.c
-
 LIBFT_DIR	=	./libft/
 
 OBJS		= $(patsubst %.c,%.o,$(LIST))
@@ -48,9 +46,6 @@ include	$(wildcard $(D_FILES))
 make-libft	:
 	$(MAKE) -C libft/
 
-test	:	make-libft
-	gcc *.c -I ./libft -L ./libft -lft -g -o test
-
 bonus	:
 
 clean-libft:
@@ -60,7 +55,7 @@ clean	:	clean-libft
 			$(RM) $(OBJS) $(OBJS_TEST) $(D_FILES)
 
 fclean	:	clean
-			$(RM) $(NAME) test
+			$(RM) $(NAME)
 
 re	:		fclean all
 
