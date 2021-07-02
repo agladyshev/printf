@@ -32,31 +32,26 @@ char	*apply_flags(char *str, t_flags flags)
 
 int	print_char(va_list *pargs, t_flags flags)
 {
-	int		res;
-	char	str[2];
-
-	str[0] = va_arg(*pargs, int);
-	str[1] = 0;
-	if (str[0] == 0)
+	int	res;
+	int	arg;
+	
+	arg = va_arg(*pargs, int);
+	if (flags.field_width > 1)
+		res = flags.field_width;
+	else
+		res = 1;
+	while (flags.field_width > 1 && flags.left_adj == 0)
 	{
-		if (flags.field_width > 1)
-			res = flags.field_width;
-		else
-			res = 1;
-		while (flags.field_width > 1 && flags.left_adj == 0)
-		{
-			ft_putchar_fd(' ', 1);
-			flags.field_width--;
-		}
-		ft_putchar_fd('\0', 1);
-		while (flags.field_width > 1 && flags.left_adj == 1)
-		{
-			ft_putchar_fd(' ', 1);
-			flags.field_width--;
-		}
-		return (res);
+		ft_putchar_fd(' ', 1);
+		flags.field_width--;
 	}
-	return (print_str_fmt(apply_flags(ft_strdup(str), flags)));
+	ft_putchar_fd((char)arg, 1);
+	while (flags.field_width > 1 && flags.left_adj == 1)
+	{
+		ft_putchar_fd(' ', 1);
+		flags.field_width--;
+	}
+	return (res);
 }
 
 size_t	print_arg(const char *str, int *i, va_list *pargs)
