@@ -51,7 +51,7 @@ int	apply_precision(char **str, t_flags flags)
 	size_t	len;
 
 	len = ft_strlen(*str);
-	if (flags.numerical && (unsigned)flags.precision > len)
+	if (flags.numerical && (unsigned)flags.precision >= len)
 	{
 		if ((*str)[0] == '-')
 			insert_0_to_neg(str, (size_t)flags.precision - len + 1);
