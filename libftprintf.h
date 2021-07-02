@@ -20,7 +20,7 @@ int		read_flags(const char *str, int *i, t_flags *flags, va_list *pargs);
 void	adjust_flags_conversion(t_flags *flags, char conversion);
 int		ft_printf(const char *str, ...);
 char	*hex_to_str(unsigned int arg, char conversion);
-char	*ptr_to_str(va_list *pargs, t_flags *flags);
+char	*ptr_to_str(va_list *pargs);
 int		concat_chars_to_str(char **str, char c, int len, int left_adj);
 void	insert_0_to_neg(char **str, int n);
 int		apply_precision(char **str, t_flags flags);

@@ -24,7 +24,7 @@ char	*hex_to_str(unsigned int arg, char conversion)
 	return (0);
 }
 
-char	*ptr_to_str(va_list *pargs, t_flags *flags)
+char	*ptr_to_str(va_list *pargs)
 {
 	char				*res;
 	void				*ptr;
@@ -32,10 +32,7 @@ char	*ptr_to_str(va_list *pargs, t_flags *flags)
 
 	ptr = va_arg(*pargs, void *);
 	if (!ptr)
-	{
-		*flags = (t_flags){0, 0, -1, 0, 0, 0};
 		return (ft_strdup("(nil)"));
-	}
 	else
 	{
 		address = (unsigned long long)ptr;

@@ -70,7 +70,7 @@ void	adjust_flags_conversion(t_flags *flags, char conversion)
 		if (flags->left_adj == 1)
 			flags->zero_padded = 0;
 	}
-	if (conversion == 'p')
+	else if (conversion == 'p')
 		flags->precision = -1;
 }
 

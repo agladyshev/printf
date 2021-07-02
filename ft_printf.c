@@ -66,7 +66,7 @@ size_t	print_arg(const char *str, int *i, va_list *pargs)
 	if (str[*i] == 'c')
 		return (print_char(pargs, flags));
 	else if (str[*i] == 'p')
-		str_fmt = ptr_to_str(pargs, &flags);
+		str_fmt = ptr_to_str(pargs);
 	else if (str[*i] == 's')
 		str_fmt = ft_strdup(va_arg(*pargs, char *));
 	else if (str[*i] == '%')
